@@ -155,9 +155,9 @@ use Illuminate\Http\Request;
 
 //RATE LIMITINGS
 //Defining Rate Limiters
-Route::get('/', function(){
-    return "home";
-})->withoutMiddleware(EnsureTokenIsValid::class);
+// Route::get('/', function(){
+//     return "home";
+// })->withoutMiddleware(EnsureTokenIsValid::class);
 
 //Implicit specific Middleware
 // Route::get('/user/{name}', function($name){
@@ -166,13 +166,25 @@ Route::get('/', function(){
 
 //exluding middleware
 
-Route::middleware('valid_user')->prefix('/user')->group(function(){
-    Route::get('/{name}', function($name){
-        return $name;
+// Route::middleware('valid_user')->prefix('/user')->group(function(){
+//     Route::get('/{name}', function($name){
+//         return $name;
 
-    });
-    Route::get('/id/{id}', function($id){
-        return $id;
-    });
+//     });
+//     Route::get('/id/{id}', function($id){
+//         return $id;
+//     });
+// });
+
+//CSRF PROTECTION
+
+Route::get('/home', function(Request $request){
+    csrf_token();
+    // $request->session()->token();
+
+    return "home";
 });
 
+Route::post('/user', function(Request $request){
+    return $request->input('username');
+});
