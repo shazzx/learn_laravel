@@ -2,6 +2,7 @@
 
 namespace App\Enums;
 use App\Http\Controllers\Practice;
+use App\Http\Middleware\EnsureTokenIsValid;
 use App\Models\Users;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -154,7 +155,24 @@ use Illuminate\Http\Request;
 
 //RATE LIMITINGS
 //Defining Rate Limiters
-
 Route::get('/', function(){
-    return 'hello';
+    return "home";
+})->withoutMiddleware(EnsureTokenIsValid::class);
+
+//Implicit specific Middleware
+// Route::get('/user/{name}', function($name){
+//     return 'user ' . $name;
+// })->middleware('verified_user');
+
+//exluding middleware
+
+Route::middleware('valid_user')->prefix('/user')->group(function(){
+    Route::get('/{name}', function($name){
+        return $name;
+
+    });
+    Route::get('/id/{id}', function($id){
+        return $id;
+    });
 });
+

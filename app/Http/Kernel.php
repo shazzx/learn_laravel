@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\EnsureNameIsValid;
+use App\Http\Middleware\EnsureTokenIsValid;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -43,6 +45,11 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+
+        'valid_user' => [
+            EnsureTokenIsValid::class,
+            EnsureNameIsValid::class,
+        ]
     ];
 
     /**
@@ -63,5 +70,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'verified_user' => EnsureTokenIsValid::class,
     ];
 }
