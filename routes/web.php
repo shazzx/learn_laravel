@@ -1,7 +1,11 @@
 <?php
 
 namespace App\Enums;
+
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\Practice;
+use App\Http\Controllers\User;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureTokenIsValid;
 use App\Models\Users;
 use Illuminate\Support\Facades\Route;
@@ -178,13 +182,19 @@ use Illuminate\Http\Request;
 
 //CSRF PROTECTION
 
-Route::get('/home', function(Request $request){
-    csrf_token();
-    // $request->session()->token();
+// Route::get('/home', function(Request $request){
+//     csrf_token();
+//     // $request->session()->token();
 
-    return "home";
-});
+//     return "home";
+// });
 
-Route::post('/user', function(Request $request){
-    return $request->input('username');
-});
+// Route::post('/user', function(Request $request){
+//     return $request->input('username');
+// });
+
+//CONTROLLERS
+
+// Route::get('/user/{id}', [User::class, "show"]);
+// Route::post('/user/create', [User::class, 'createUser']);
+Route::resource('user', UserController::class);

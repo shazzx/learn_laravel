@@ -15,7 +15,7 @@ class EnsureNameIsValid
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->route('name') !== 'shazz'){
+        if($request->input('name') !== 'shazz'){
             return redirect('/');
         }
         return $next($request);
