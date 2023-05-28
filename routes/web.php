@@ -5,11 +5,13 @@ namespace App\Enums;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\Practice;
 use App\Http\Controllers\User;
+use App\Http\Controllers\UserApiController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureTokenIsValid;
 use App\Models\Users;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -197,4 +199,48 @@ use Illuminate\Http\Request;
 
 // Route::get('/user/{id}', [User::class, "show"]);
 // Route::post('/user/create', [User::class, 'createUser']);
-Route::resource('user', UserController::class);
+
+
+//SINGLE RESOURCE
+// Route::resource('user', UserController::class);
+
+//MULTIPLE RESOURCE CONTROLLERS
+// Route::resources([
+//     'user' => UserController::class,
+//     'user/api' => UserController::class
+// ]);
+
+
+//Customizing Missing Model Behavior
+// Route::resource('user', UserController::class)->missing(function(Request $request){
+//     return Redirect::route('users.index');
+// });
+
+//Soft Deleted Models
+// Route::resource('user', UserController::class)->withTrashed(['show']);
+
+
+//Partial Resource Routes
+
+// Route::resource('user', UserController::class)->only([
+//     'index', 'show', 'store', 'update', 'destroy'
+// ]);
+
+
+// Route::resource('user', UserController::class)->except([
+//     'edit', 'create'
+// ]);
+
+// Route::apiResource('user/api', UserApiController::class);
+// Route::apiResources([
+//     'user' => UserController::class,
+//     'user/api' => UserController::class
+// ]);
+
+// Route::apiResource('user', UserApiController::class)->names([
+//     'create' => 'user.create'
+// ]);
+
+// Route::apiResource('user', UserApiController::class)->parameters([
+//     'user' => 'private_user',
+// ]);
